@@ -8,6 +8,7 @@ const app=express();
 app.use(express.json());
 
 app.use("/api/rooms",roomsRouter);
+app.use("/api/notes",notesRouter);
 
 
 
