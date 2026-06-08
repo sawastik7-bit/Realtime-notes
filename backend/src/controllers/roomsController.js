@@ -1,5 +1,6 @@
-import Rooms from '../models/roomsModel'
+import Rooms from '../models/roomsModel.js'
 import {nanoid} from 'nanoid';
+
 export const createRoom = async (req, res) => {
   const { roomName } = req.body;
 
@@ -80,6 +81,39 @@ export const getRoom=async(req,res)=>{
 
 };
 
+
+export const deleteRoom=async(req,res)=>{
+
+const id=req.params.id;
+try{
+
+const room=await Rooms.findOneAndDelete({roomId:id})
+
+if(!room){
+    return res.status(404).json({
+        message:"No room was found !",
+    });
+}
+
+await Notes.deleteMany({
+  room: room._id
+});
+
+return res.status(200).json({
+    message:"Room deleted successfully",
+    room
+})
+
+
+
+}catch(error){
+    return res.status(500).json({
+        message:"Internal server error"
+    });
+}
+
+
+};
 
 
 

@@ -1,5 +1,8 @@
 import express from 'express';
 import roomsRouter from './src/routes/roomsRoutes/roomsRoutes.js';
+import mongoose from 'mongoose';
+
+mongoose.connect('mongodb://localhost:27017/realtime-notes');
 
 const app=express();
 app.use(express.json());
