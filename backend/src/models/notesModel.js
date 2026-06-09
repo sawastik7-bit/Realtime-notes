@@ -8,16 +8,19 @@ const notesSchema = new mongoose.Schema(
       maxlength: 100,
     },
 
-    content: {
-      type: String,
-      default: "",
-    },
+    content: [
+     {
+  text:{type:String,required:true}
+     }
+    ], 
 
     room: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Rooms",
       required: true,
     },
+
+    
   },
   {
     timestamps: true,

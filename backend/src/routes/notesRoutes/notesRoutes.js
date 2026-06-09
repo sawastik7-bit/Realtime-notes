@@ -1,12 +1,14 @@
 import express from 'express';
-import { createNote,fetchNotes,deleteNote,getNote } from '../../controllers/notesController';
+import { createNote,fetchNotes,deleteNote,getNote } from '../../controllers/notesController.js';
 const notesRouter=express.Router();
 
 
 notesRouter.post("/", createNote);
 
-notesRouter.get("/room/:roomId", fetchNotes);
+notesRouter.get("/:roomId", fetchNotes);
 
-notesRouter.get("/:id", getNote);
+notesRouter.get("/note/:id", getNote);
 
-notesRouter.delete("/:id", deleteNote);
+notesRouter.delete("/note/:id", deleteNote);
+
+export default notesRouter;
