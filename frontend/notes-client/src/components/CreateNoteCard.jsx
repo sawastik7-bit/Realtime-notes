@@ -6,19 +6,15 @@ const CreateNoteCard = ({
   
   const [titleName, setTitleName] =
     useState("");
-  const [content, setContent] =
-    useState("");
+
 
   const handleNoteSubmit = () => {
-    if ( !content.trim()) {
-      alert("Enter content");
-      return;
-    }
+ 
 
-    handleNoteCreation({titleName,content});
+    handleNoteCreation({titleName});
 
     setTitleName("");
-    setContent("");
+    
   };
 
   return (
@@ -48,22 +44,7 @@ const CreateNoteCard = ({
           text-black
         "
       />
-      <input
-        type="text"
-        value={content}
-        onChange={(e) =>
-          setContent(e.target.value)
-        }
-        placeholder="Content"
-        className="
-          w-full
-          p-2
-          rounded
-          mb-3
-          text-black
-        "
-      />
-
+    
       <button
         onClick={handleNoteSubmit}
         className="

@@ -3,7 +3,7 @@ import axios from "axios";
 import NoteCard from "./NoteCard";
 import CreateNoteCard from "./CreateNoteCard";
 
-const NotesSideBar=({selectedRoom})=>{
+const NotesSideBar=({selectedRoom,setSelectedNote})=>{
 
     const [notes,setNotes]=useState([]);
 
@@ -31,13 +31,13 @@ const NotesSideBar=({selectedRoom})=>{
 };
 
 
- const handleNoteCreation = async ({titleName,content}) => {
+ const handleNoteCreation = async ({titleName}) => {
     try {
       await axios.post(
         "http://localhost:5000/api/notes",
         {
           title:titleName,
-          content:content,
+         
           roomId:selectedRoom.roomId
         }
       );
@@ -124,6 +124,7 @@ return (
         <NoteCard
           key={note._id}
           note={note}
+          setSelectedNote={setSelectedNote}
         />
       ))
     )}

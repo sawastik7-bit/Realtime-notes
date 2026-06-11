@@ -1,4 +1,4 @@
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note ,setSelectedNote}) => {
   return (
     <div
       className="
@@ -8,6 +8,7 @@ const NoteCard = ({ note }) => {
       text-white
       cursor-pointer
     "
+    onClick={()=>setSelectedNote(note)}
     >
       {note.title}
     </div>
