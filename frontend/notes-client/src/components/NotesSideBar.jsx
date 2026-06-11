@@ -1,22 +1,16 @@
 import { useState,useEffect } from "react";
 import axios from "axios";
 import NoteCard from "./NoteCard";
-
+import CreateNoteCard from "./CreateNoteCard";
 
 const NotesSideBar=({selectedRoom})=>{
 
     const [notes,setNotes]=useState([]);
 
     const [loading,setLoading]=useState(false);
+    const [showCreateNoteCard,setShowCreateNoteCard]=useState(false);
 
 
-    useEffect(() => {
-  if(!selectedRoom){
-    return;
-  }
-
-  fetchNotes();
-}, [selectedRoom]);
 
 
     const fetchNotes = async () => {
@@ -37,6 +31,34 @@ const NotesSideBar=({selectedRoom})=>{
 };
 
 
+ const handleNoteCreation = async ({titleName,content}) => {
+    try {
+      await axios.post(
+        "http://localhost:5000/api/notes",
+        {
+          title:titleName,
+          content:content,
+          roomId:selectedRoom.roomId
+        }
+      );
+
+      await fetchNotes();
+
+      setShowCreateNoteCard(false);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+     useEffect(() => {
+  if(!selectedRoom){
+    return;
+  }
+
+  fetchNotes();
+}, [selectedRoom]);
 
 
 
@@ -77,9 +99,17 @@ return (
         rounded-lg
         mb-4
       "
+      onClick={()=>setShowCreateNoteCard(true)}
     >
       + Create Note
     </button>
+    {showCreateNoteCard && (
+        <CreateNoteCard
+          handleNoteCreation={
+            handleNoteCreation
+          }
+        />
+      )}
 
     {loading ? (
       <p className="text-gray-400">
