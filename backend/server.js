@@ -2,6 +2,7 @@ import express from 'express';
 import roomsRouter from './src/routes/roomsRoutes/roomsRoutes.js';
 import notesRouter from './src/routes/notesRoutes/notesRoutes.js';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import http from 'http';
 import { Server } from 'socket.io';
 import { initializeSocket } from './src/sockets/socketHandler.js';
@@ -9,14 +10,18 @@ import { initializeSocket } from './src/sockets/socketHandler.js';
 mongoose.connect('mongodb://localhost:27017/realtime-notes');
 
 const app=express();
-const server=http.createServer(app);
+const server=http.createServer(app,{
+    cors:{
+        origin:"*"
+    }
+});
 
 const io=new Server(server,{
     cors:{
         origin:"*"
     },
 });
-
+app.use(cors());
 app.use(express.json());
 
 initializeSocket(io);
