@@ -53,6 +53,30 @@ const RoomSidebar = ({setSelectedRoom}) => {
     }
   };
 
+  const deleteRoom=async(room)=>{
+if(!room) return;
+
+ const confirmed = window.confirm(
+    `Delete ${room.roomName}?`
+  );
+
+try{
+
+  const res=await axios.delete(`http://localhost:5000/api/rooms/${room.roomId}`);
+
+alert("Room deleted successfully");
+  await fetchRooms();
+  return;
+
+
+}catch(error){
+
+  console.log("error in deleting the room",error);
+
+}
+
+  }
+
   
 
   return (
@@ -98,6 +122,7 @@ const RoomSidebar = ({setSelectedRoom}) => {
       handleRoomSelect={handleRoomSelect}
         key={room._id}
         room={room}
+        deleteRoom={deleteRoom}
       />
     ))
   )}

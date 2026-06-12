@@ -3,7 +3,7 @@ import axios from "axios";
 import NoteCard from "./NoteCard";
 import CreateNoteCard from "./CreateNoteCard";
 
-const NotesSideBar=({selectedRoom,setSelectedNote})=>{
+const NotesSideBar=({selectedRoom,setSelectedNote,selectedNote})=>{
 
     const [notes,setNotes]=useState([]);
 
@@ -72,7 +72,25 @@ if (!selectedRoom) {
   );
 }
 
+const handleNoteDelete=async(note)=>{
 
+  if(!note) return;
+  try {
+  await axios.delete(
+    `http://localhost:5000/api/notes/note/${note._id}`
+  );
+
+  if (selectedNote?._id === note._id) {
+    setSelectedNote(null);
+  }
+
+  await fetchNotes();
+
+} catch (error) {
+  console.log(error);
+}
+
+}
 
 
 
@@ -125,6 +143,7 @@ return (
           key={note._id}
           note={note}
           setSelectedNote={setSelectedNote}
+          handleNoteDelete={handleNoteDelete}
         />
       ))
     )}
