@@ -10,7 +10,11 @@ const notesSchema = new mongoose.Schema(
 
     content: [
      {
-  text:{type:String,required:true}
+  text:{type:String,required:true},
+   createdAt: {
+      type: Date,
+      default: Date.now
+    }
      }
     ], 
 

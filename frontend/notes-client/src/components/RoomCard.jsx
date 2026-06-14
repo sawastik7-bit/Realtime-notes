@@ -1,5 +1,3 @@
-
-
 const RoomCard=({room,handleRoomSelect,deleteRoom})=>{
     return (
 
@@ -7,18 +5,24 @@ const RoomCard=({room,handleRoomSelect,deleteRoom})=>{
       onClick={() => handleRoomSelect(room)}
       className="
         p-3
-        rounded-lg
+        mb-3
         cursor-pointer
-        bg-[#404249]
-        hover:bg-[#4a4d52]
+        bg-white
+        border-4
+        border-black
+        text-black
+        shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+        hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
+        hover:translate-x-[2px]
+        hover:translate-y-[2px]
         transition-all
       "
     >
-      <h3 className="text-white font-medium">
+      <h3 className="font-extrabold">
         {room.roomName}
       </h3>
 
-      <p className="text-xs text-gray-400 mt-1">
+      <p className="text-xs font-bold text-gray-600 mt-1">
         {room.roomId}
       </p>
 
@@ -27,7 +31,23 @@ const RoomCard=({room,handleRoomSelect,deleteRoom})=>{
           e.stopPropagation();
           deleteRoom(room);
         }}
-        className="mt-2 px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs rounded transition-colors"
+        className="
+          mt-2
+          px-3
+          py-1
+          bg-red-400
+          text-black
+          font-extrabold
+          text-xs
+          border-4
+          border-black
+          shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]
+          hover:bg-red-500
+          hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]
+          hover:translate-x-[2px]
+          hover:translate-y-[2px]
+          transition-all
+        "
       >
         Delete
       </button>

@@ -3,7 +3,7 @@ import axios from "axios";
 import RoomCard from "./RoomCard";
 import CreateRoomCard from "./CreateRoomCard";
 
-const RoomSidebar = ({setSelectedRoom}) => {
+const RoomSidebar = ({setSelectedRoom,selectedRoom,setSelectedNote}) => {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -34,6 +34,8 @@ const RoomSidebar = ({setSelectedRoom}) => {
 
   const handleRoomSelect=(room)=>{
     setSelectedRoom(room);
+
+  setSelectedNote(null);
   }
   const handleRoomCreation = async (roomName) => {
     try {
@@ -56,16 +58,21 @@ const RoomSidebar = ({setSelectedRoom}) => {
   const deleteRoom=async(room)=>{
 if(!room) return;
 
- const confirmed = window.confirm(
-    `Delete ${room.roomName}?`
-  );
+
+
+const id=room.roomId;
 
 try{
 
-  const res=await axios.delete(`http://localhost:5000/api/rooms/${room.roomId}`);
+  const res=await axios.delete(`http://localhost:5000/api/rooms/${id}`);
 
-alert("Room deleted successfully");
+
+  if (selectedRoom?.roomId === room.roomId) {
+  setSelectedRoom(null);
+}
   await fetchRooms();
+  alert("Room deleted successfully");
+
   return;
 
 
@@ -84,20 +91,30 @@ alert("Room deleted successfully");
       className="
       w-[280px]
       h-screen
-      bg-[#2b2d31]
+      bg-pink-200
       p-4
       flex
       flex-col
+      border-r-4
+      border-black
+      overflow-y-auto
     "
     >
       <button
         onClick={() => setShowModal(true)}
         className="
-        bg-[#5865f2]
-        text-white
+        bg-blue-400
+        text-black
+        font-extrabold
         py-2
-        rounded-lg
         mb-4
+        border-4
+        border-black
+        shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+        hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
+        hover:translate-x-[2px]
+        hover:translate-y-[2px]
+        transition-all
       "
       >
         + Create Room
@@ -111,9 +128,20 @@ alert("Room deleted successfully");
         />
       )}
 
-     <div className="space-y-2">
+     <div className="space-y-1">
   {loading ? (
-    <p className="text-white">
+    <p
+      className="
+        bg-white
+        border-4
+        border-black
+        px-4
+        py-3
+        font-bold
+        text-black
+        shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+      "
+    >
       Loading...
     </p>
   ) : (

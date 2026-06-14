@@ -11,9 +11,13 @@ const [selectedNote,setSelectedNote]=useState(null);
     return (
 
         <div className="flex">
-<RoomSidebar setSelectedRoom={setSelectedRoom}/>
-<NotesSideBar selectedRoom={selectedRoom} setSelectedNote={setSelectedNote}/>
-<ChatRoom selectedNote={selectedNote}/>
+<RoomSidebar setSelectedRoom={setSelectedRoom} selectedRoom={selectedRoom} setSelectedNote={setSelectedNote}/>
+<NotesSideBar
+  selectedRoom={selectedRoom}
+  selectedNote={selectedNote}
+  setSelectedNote={setSelectedNote}
+/>
+<ChatRoom selectedNote={selectedNote} setSelectedNote={setSelectedNote}/>
 
 
         </div>

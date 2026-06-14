@@ -4,11 +4,19 @@ const NoteCard = ({ note, setSelectedNote,handleNoteDelete }) => {
   return (
     <div
       className="
-      bg-[#404249]
+      bg-white
+      border-4
+      border-black
       p-3
-      rounded-lg
-      text-white
+      mb-3
+      text-black
+      font-bold
       cursor-pointer
+      shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+      hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
+      hover:translate-x-[2px]
+      hover:translate-y-[2px]
+      transition-all
     "
       onClick={() =>{
       
@@ -22,7 +30,21 @@ const NoteCard = ({ note, setSelectedNote,handleNoteDelete }) => {
             e.stopPropagation();
            
             handleNoteDelete(note)}}
-          className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
+          className="
+            bg-red-400
+            text-black
+            font-extrabold
+            border-4
+            border-black
+            px-2
+            py-1
+            shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]
+            hover:bg-red-500
+            hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]
+            hover:translate-x-[2px]
+            hover:translate-y-[2px]
+            transition-all
+          "
         >
           Delete
         </button>

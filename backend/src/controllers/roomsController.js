@@ -1,5 +1,6 @@
 import Rooms from '../models/roomsModel.js'
 import {nanoid} from 'nanoid';
+import Notes from '../models/notesModel.js';
 
 export const createRoom = async (req, res) => {
   const { roomName } = req.body;

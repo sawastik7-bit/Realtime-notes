@@ -66,31 +66,61 @@ const NotesSideBar=({selectedRoom,setSelectedNote,selectedNote})=>{
 
 if (!selectedRoom) {
   return (
-    <div className="flex-1 flex items-center justify-center text-gray-400">
-      Select a room to view notes
+    <div
+      className="
+        flex-1
+        h-screen
+        bg-purple-200
+        flex
+        items-center
+        justify-center
+      "
+    >
+      <p
+        className="
+          bg-white
+          border-4
+          border-black
+          px-6
+          py-3
+          font-bold
+          text-black
+          text-lg
+          shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
+        "
+      >
+        Select a room to view notes
+      </p>
     </div>
   );
 }
 
-const handleNoteDelete=async(note)=>{
+const handleNoteDelete = async (note) => {
+  if (!note) return;
 
-  if(!note) return;
-  try {
-  await axios.delete(
-    `http://localhost:5000/api/notes/note/${note._id}`
+  const confirmedDelete = window.confirm(
+    `Delete ${note.title}?`
   );
 
-  if (selectedNote?._id === note._id) {
-    setSelectedNote(null);
+  if (!confirmedDelete) return;
+
+  try {
+    await axios.delete(
+      `http://localhost:5000/api/notes/note/${note._id}`
+    );
+
+    if (selectedNote?._id === note._id) {
+      setSelectedNote(null);
+    }
+
+    await fetchNotes();
+
+  } catch (error) {
+    console.log(error);
   }
+};
 
-  await fetchNotes();
 
-} catch (error) {
-  console.log(error);
-}
-
-}
 
 
 
@@ -102,20 +132,28 @@ return (
     className="
       w-[300px]
       h-screen
-      bg-[#313338]
+      bg-purple-200
       p-4
-      border-l
-      border-[#1e1f22]
+      border-l-4
+      border-black
+      overflow-y-auto
     "
   >
     <button
       className="
         w-full
-        bg-[#5865f2]
-        text-white
+        bg-blue-400
+        text-black
+        font-extrabold
         py-2
-        rounded-lg
         mb-4
+        border-4
+        border-black
+        shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+        hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
+        hover:translate-x-[2px]
+        hover:translate-y-[2px]
+        transition-all
       "
       onClick={()=>setShowCreateNoteCard(true)}
     >
@@ -130,11 +168,33 @@ return (
       )}
 
     {loading ? (
-      <p className="text-gray-400">
+      <p
+        className="
+          bg-white
+          border-4
+          border-black
+          px-4
+          py-3
+          font-bold
+          text-black
+          shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+        "
+      >
         Loading...
       </p>
     ) : notes.length === 0 ? (
-      <p className="text-gray-400">
+      <p
+        className="
+          bg-white
+          border-4
+          border-black
+          px-4
+          py-3
+          font-bold
+          text-black
+          shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+        "
+      >
         No notes found
       </p>
     ) : (

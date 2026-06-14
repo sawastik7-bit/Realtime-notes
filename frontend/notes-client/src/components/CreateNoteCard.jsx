@@ -20,13 +20,15 @@ const CreateNoteCard = ({
   return (
     <div
       className="
-      bg-[#404249]
+      bg-green-300
+      border-4
+      border-black
       p-4
-      rounded-lg
       mb-4
+      shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
     "
     >
-      <h2 className="text-white mb-3">
+      <h2 className="text-black font-extrabold text-lg mb-3">
         Create Note
       </h2>
       <input
@@ -38,21 +40,38 @@ const CreateNoteCard = ({
         placeholder="Title Name"
         className="
           w-full
-          p-2
-          rounded
-          mb-3
+          bg-white
           text-black
+          font-bold
+          placeholder:text-gray-500
+          border-4
+          border-black
+          p-2
+          mb-3
+          outline-none
+          shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+          focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
+          focus:translate-x-[2px]
+          focus:translate-y-[2px]
+          transition-all
         "
       />
     
       <button
         onClick={handleNoteSubmit}
         className="
-          bg-[#5865f2]
-          text-white
+          bg-blue-400
+          text-black
+          font-extrabold
           px-4
           py-2
-          rounded
+          border-4
+          border-black
+          shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+          hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
+          hover:translate-x-[2px]
+          hover:translate-y-[2px]
+          transition-all
         "
       >
         Create
