@@ -207,6 +207,8 @@ useEffect(()=>{
               <ChatCard
                 key={chat._id}
                 text={chat.text}
+                createdAt={chat.createdAt}
+
               />
             ))
           )}

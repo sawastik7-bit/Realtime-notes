@@ -1,4 +1,4 @@
-const ChatCard = ({ text }) => {
+const ChatCard = ({ text,createdAt }) => {
   return (
     <div
       className="
@@ -16,6 +16,13 @@ const ChatCard = ({ text }) => {
         transition-all
       "
     >
+        <p className="text-xs text-gray-400 mb-2">
+        {new Date(createdAt).toLocaleTimeString("en-us",{
+          hour:"2-digit",
+          minute:"2-digit",
+          hour12:true
+        })}
+      </p>
       {text}
     </div>
   );

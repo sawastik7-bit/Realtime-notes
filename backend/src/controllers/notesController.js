@@ -70,7 +70,9 @@ const room=await Rooms.findOne({roomId});
     }
 
 
-    const notes=await Notes.find({room:room._id});
+    let notes=await Notes.find({room:room._id});
+
+  
 
     return res.status(200).json({
         success:true,
@@ -92,6 +94,7 @@ export const deleteNote=async(req,res)=>{
     try{
 
   const note = await Notes.findByIdAndDelete(notesId);
+  
 if (!note) {
   return res.status(404).json({
     success: false,
@@ -126,6 +129,7 @@ export const getNote = async (req, res) => {
                 message: "Note not found"
             });
         }
+        note.content = note.content.slice(-50);
 
         return res.status(200).json({
             success: true,
