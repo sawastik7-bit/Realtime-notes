@@ -35,9 +35,8 @@ const CreateRoomCard = ({
       <input
         type="text"
         value={roomName}
-        onChange={(e) =>
-          setRoomName(e.target.value)
-        }
+        onChange={(e) => setRoomName(e.target.value)}
+        onKeyDown={(e) => { if (e.key === "Enter") handleSubmit(); }}
         placeholder="Room Name"
         className="
           w-full
@@ -60,6 +59,7 @@ const CreateRoomCard = ({
 
       <button
         onClick={handleSubmit}
+        onKeyDown={(e) => { if (e.key === "Enter") handleSubmit(); }}
         className="
           bg-blue-400
           text-black

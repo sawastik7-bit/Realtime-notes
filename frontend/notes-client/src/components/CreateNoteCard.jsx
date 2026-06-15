@@ -34,6 +34,7 @@ const CreateNoteCard = ({
       <input
         type="text"
         value={titleName}
+         onKeyDown={(e) => { if (e.key === "Enter") handleNoteSubmit(); }}
         onChange={(e) =>
           setTitleName(e.target.value)
         }
@@ -59,6 +60,7 @@ const CreateNoteCard = ({
     
       <button
         onClick={handleNoteSubmit}
+    
         className="
           bg-blue-400
           text-black
