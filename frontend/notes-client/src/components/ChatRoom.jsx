@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChatCard from "./ChatCard.jsx";
 import socket from "../socket/socket.js";
 
@@ -7,6 +7,8 @@ const ChatRoom = ({ selectedNote }) => {
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const lastMessageRef=useRef(null);
+
 
   const fetchChat = async () => {
     try {
@@ -37,12 +39,18 @@ const ChatRoom = ({ selectedNote }) => {
 
     setMessage("");
   };
-
+useEffect(()=>{
+   if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+},[chats]);
   useEffect(() => {
+
     if (!selectedNote) {
       setChats([]);
       return;
     }
+
 
     fetchChat();
 
@@ -77,6 +85,8 @@ const ChatRoom = ({ selectedNote }) => {
       );
     };
   }, [selectedNote]);
+
+  
 
   if (!selectedNote) {
     return (
@@ -200,6 +210,8 @@ const ChatRoom = ({ selectedNote }) => {
               />
             ))
           )}
+
+          <div ref={lastMessageRef}></div>
         </div>
       </div>
 
@@ -216,6 +228,9 @@ const ChatRoom = ({ selectedNote }) => {
         <input
           type="text"
           value={message}
+          onKeyDown={(e)=>{
+            if(e.key=='Enter') handleSendContribution()
+          }}
           onChange={(e) =>
             setMessage(e.target.value)
           }
