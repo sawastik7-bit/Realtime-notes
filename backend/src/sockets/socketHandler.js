@@ -1,3 +1,4 @@
+
 import Notes from "../models/notesModel.js";
 
 export const initializeSocket=(io)=>{
@@ -32,6 +33,9 @@ socket.on("join-note", (noteId) => {
 
   socket.join(noteId);
 
+  const count=getClientCount(io,noteId);
+  io.to(noteId).emit('userCount',count);
+
   console.log(
     `${socket.id} joined note ${noteId}`
   );
@@ -45,6 +49,10 @@ socket.on("leave-note", (noteId) => {
   if (!noteId) return;
 
   socket.leave(noteId);
+
+   const count = getClientCount(io, noteId);
+
+  io.to(noteId).emit("userCount", count);
 
   console.log(
     `${socket.id} left note ${noteId}`
@@ -90,6 +98,17 @@ socket.on("remove-contribution",async({noteId,contributionId})=>{
      
 })
 
+socket.on("disconnecting",()=>{
+   socket.rooms.forEach((room) => {
+    if (room !== socket.id) {
+      io.to(room).emit(
+        "userCount",
+        getClientCount(io,room) - 1
+      );
+    }
+  });
+});
+
     socket.on("disconnect",()=>{
         console.log(`User disconnected: ${socket.id}`);
     })
@@ -97,3 +116,11 @@ socket.on("remove-contribution",async({noteId,contributionId})=>{
 
 
 }
+
+
+const getClientCount = (io,roomName) => {
+  return (
+    io.sockets.adapter.rooms.get(roomName)
+      ?.size || 0
+  );
+};

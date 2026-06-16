@@ -7,6 +7,7 @@ const ChatRoom = ({ selectedNote }) => {
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [onlineContributors,setOnlineCountributors]=useState(0);
   const lastMessageRef=useRef(null);
 
 
@@ -68,6 +69,11 @@ useEffect(()=>{
       ]);
     };
 
+    socket.on('userCount',(count)=>{
+
+      setOnlineCountributors(count);
+    })
+
     socket.on(
       "new-contribution",
       handleNewContribution
@@ -83,6 +89,7 @@ useEffect(()=>{
         "leave-note",
         selectedNote._id
       );
+      socket.off('userCount');
     };
   }, [selectedNote]);
 
@@ -153,7 +160,7 @@ useEffect(()=>{
   return (
     <div className="flex-1 h-screen bg-yellow-200 flex flex-col">
 
-  {/* Fixed Header */}
+ 
   <div
     className="
       p-6
@@ -161,6 +168,7 @@ useEffect(()=>{
       border-black
       bg-yellow-300
       shrink-0
+      flex justify-between
     "
   >
     <h2
@@ -179,6 +187,20 @@ useEffect(()=>{
     >
       {selectedNote.title}
     </h2>
+
+    <p 
+    className="
+            bg-white
+            border-4
+            border-black
+            px-4
+            py-3
+            font-bold
+            text-black
+            inline-block
+            shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
+          "
+    >Contributors Online {onlineContributors}</p>
   </div>
 
   {/* Scrollable Chat Area */}
