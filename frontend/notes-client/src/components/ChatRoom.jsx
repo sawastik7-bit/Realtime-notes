@@ -31,8 +31,17 @@ const ChatRoom = ({ selectedNote }) => {
   };
 
   const handleSendContribution = () => {
+
     if (!message.trim()) return;
 
+     const tempMessage = {
+    _id: `temp-${Date.now()}`,
+    text: message,
+    createdAt: new Date(),
+    pending: true,
+  };
+
+  setChats((prev)=> [...prev,tempMessage]);
     socket.emit("add-contribution", {
       noteId: selectedNote._id,
       content: message,
@@ -60,29 +69,27 @@ useEffect(()=>{
       selectedNote._id
     );
 
-    const handleNewContribution = (
-      messageData
-    ) => {
-      setChats((prev) => [
-        ...prev,
-        messageData,
-      ]);
-    };
+    
 
     socket.on('userCount',(count)=>{
 
       setOnlineCountributors(count);
     })
 
-    socket.on(
-      "new-contribution",
-      handleNewContribution
+    socket.on("new-contribution", (messageData) => {
+  setChats((prev) => {
+    const withoutPending = prev.filter(
+      (chat) =>
+        !(chat.pending && chat.text === messageData.text)
     );
 
+    return [...withoutPending, messageData];
+  });
+});
     return () => {
       socket.off(
         "new-contribution",
-        handleNewContribution
+       
       );
 
       socket.emit(
